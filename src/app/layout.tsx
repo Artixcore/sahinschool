@@ -9,6 +9,11 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/assets/logo.png",
+    shortcut: "/assets/logo.png",
+    apple: "/assets/logo.png",
+  },
   title: "Sahin School, Bagerhat",
   description:
     "Official website of Sahin School, Bagerhat. A joyful kindergarten school established in 2023.",
