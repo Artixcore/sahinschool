@@ -9,7 +9,10 @@ import { HeroCtas } from "./HeroCtas";
 
 export function Hero({ heroImageSrc }: { heroImageSrc: string | null }) {
   return (
-    <div id="home" className="relative overflow-hidden bg-sky-gradient pt-6 sm:pt-10">
+    <div
+      id="home"
+      className="relative scroll-mt-28 overflow-hidden bg-sky-gradient pt-8 sm:scroll-mt-32 sm:pt-12"
+    >
       <FloatingDecor />
       <Container className="relative z-10">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">

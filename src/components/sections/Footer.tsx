@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { Container } from "@/components/ui/Container";
+import { GOOGLE_MAPS_PLACE_URL } from "@/lib/site";
 
 const LINKS = [
   { href: "#home", label: "Home" },
@@ -18,7 +19,7 @@ export function Footer() {
       <Container className="py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3">
-            <Logo />
+            <Logo size={56} />
             <p className="text-lg font-extrabold text-white">Sahin School, Bagerhat</p>
             <p className="text-sm text-sky-100/90">Established 2023</p>
             <p className="max-w-xs text-sm leading-relaxed text-sky-100/80">
@@ -45,7 +46,16 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wide text-white">Contact</h3>
             <ul className="mt-4 space-y-2 text-sm font-semibold text-sky-100/85">
-              <li>Bagerhat, Bangladesh</li>
+              <li>
+                <a
+                  href={GOOGLE_MAPS_PLACE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-white"
+                >
+                  Bagerhat, Bangladesh
+                </a>
+              </li>
               <li>Phone number will be updated soon</li>
               <li>Email will be updated soon</li>
             </ul>
