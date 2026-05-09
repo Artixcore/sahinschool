@@ -75,7 +75,7 @@ export function Footer() {
 
         <div className="mt-12 border-t border-white/10 pt-6 text-center text-xs leading-relaxed text-sky-100/70 sm:text-sm">
           <p>
-            All rights reserved by Sahin School. Developed by 
+            All rights reserved by Sahin School. Developed by  
             <a
               href="https://artixcore.com/"
               className="font-semibold text-white underline-offset-4 hover:underline"
