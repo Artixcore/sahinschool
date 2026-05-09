@@ -1,65 +1,22 @@
-import { Crown, School, UserRound } from "lucide-react";
-import { HoverLift } from "@/components/motion/HoverLift";
 import { Reveal } from "@/components/motion/Reveal";
+import { TeacherCard } from "@/components/teachers/TeacherCard";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { cn } from "@/lib/utils";
 
-function AvatarPlaceholder({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn(
-        "flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-sky-100 to-white ring-2 ring-white",
-        className,
-      )}
-    >
-      <UserRound className="h-8 w-8 text-sky-400 sm:h-10 sm:w-10" aria-hidden />
-    </div>
-  );
-}
-
-function RoleCard({
-  role,
-  subtitle,
-  highlight,
-  badge,
-  delay,
-}: {
-  role: string;
-  subtitle: string;
-  highlight?: boolean;
-  badge?: "crown" | "school";
-  delay?: number;
-}) {
-  return (
-    <Reveal delay={delay}>
-      <HoverLift>
-        <article
-          className={cn(
-            "flex flex-col items-center rounded-3xl border bg-white p-6 text-center shadow-card transition-shadow hover:shadow-soft",
-            highlight ? "border-sky-200 ring-2 ring-sky-100" : "border-sky-100",
-          )}
-        >
-          <div className="relative h-24 w-24 overflow-hidden rounded-full shadow-inner ring-4 ring-sky-50 sm:h-28 sm:w-28">
-            <AvatarPlaceholder />
-            {badge === "crown" ? (
-              <span className="absolute -right-1 -top-1 inline-flex h-9 w-9 items-center justify-center rounded-full bg-neutral-900 text-amber-100 shadow-md ring-2 ring-white">
-                <Crown className="h-5 w-5" aria-hidden />
-              </span>
-            ) : null}
-            {badge === "school" ? (
-              <span className="absolute -right-1 -top-1 inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-600 text-white shadow-md ring-2 ring-white">
-                <School className="h-5 w-5" aria-hidden />
-              </span>
-            ) : null}
-          </div>
-          <h3 className="mt-4 text-lg font-extrabold text-neutral-900">{role}</h3>
-          <p className="mt-1 text-sm font-medium text-neutral-500">{subtitle}</p>
-        </article>
-      </HoverLift>
-    </Reveal>
-  );
-}
+const leadership = [
+  {
+    role: "Principal",
+    subtitle: "School leadership",
+    imageSrc: "/assets/principal.jpeg",
+    badge: "school" as const,
+  },
+  {
+    role: "Chairman",
+    subtitle: "Leadership & vision",
+    imageSrc: "/assets/chairman.jpeg",
+    badge: "crown" as const,
+  },
+];
 
 export function Teachers() {
   const teachers = Array.from({ length: 28 }, (_, i) => i + 1);
@@ -76,21 +33,20 @@ export function Teachers() {
           </p>
         </Reveal>
 
-        <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-          <RoleCard
-            role="Chairman"
-            subtitle="Leadership & vision"
-            highlight
-            badge="crown"
-            delay={0}
-          />
-          <RoleCard
-            role="Principal"
-            subtitle="School leadership"
-            highlight
-            badge="school"
-            delay={0.05}
-          />
+        <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
+          {leadership.map((person, index) => (
+            <TeacherCard
+              key={person.role}
+              role={person.role}
+              subtitle={person.subtitle}
+              imageSrc={person.imageSrc}
+              badge={person.badge}
+              featured
+              isLeadership
+              highlight
+              delay={index === 0 ? 0 : 0.05}
+            />
+          ))}
         </div>
 
         <Reveal delay={0.08}>
@@ -101,16 +57,7 @@ export function Teachers() {
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
           {teachers.map((n, index) => (
-            <Reveal key={n} delay={0.02 * (index % 8)}>
-              <HoverLift>
-                <article className="rounded-2xl border border-white/80 bg-white/90 p-3 text-center shadow-card backdrop-blur-sm transition-shadow hover:shadow-soft">
-                  <div className="mx-auto h-14 w-14 overflow-hidden rounded-full ring-2 ring-sky-50">
-                    <AvatarPlaceholder />
-                  </div>
-                  <h3 className="mt-2 text-xs font-bold text-neutral-900 sm:text-sm">Teacher</h3>
-                </article>
-              </HoverLift>
-            </Reveal>
+            <TeacherCard key={n} role="Teacher" delay={0.02 * (index % 8)} />
           ))}
         </div>
 

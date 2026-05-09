@@ -1,11 +1,11 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { listPublicAssets } from "@/lib/listPublicAssets";
+import { excludeLeadershipPortraits, listPublicAssets } from "@/lib/listPublicAssets";
 import { GalleryClient } from "./GalleryClient";
 
 export function Gallery() {
-  const images = listPublicAssets("assets");
+  const images = excludeLeadershipPortraits(listPublicAssets("assets"));
 
   return (
     <Section id="gallery" mutedBg>

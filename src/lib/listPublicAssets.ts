@@ -6,6 +6,13 @@ import { cache } from "react";
 
 const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
 
+/** Faculty portraits shown only in Teachers — exclude from gallery and featured imagery. */
+const LEADERSHIP_PORTRAIT_FILENAMES = new Set(["principal.jpeg", "chairman.jpeg"]);
+
+export function excludeLeadershipPortraits(filenames: string[]): string[] {
+  return filenames.filter((name) => !LEADERSHIP_PORTRAIT_FILENAMES.has(name.toLowerCase()));
+}
+
 function safeReadDir(dir: string): string[] {
   try {
     return fs.readdirSync(dir);
@@ -39,29 +46,30 @@ export function resolveHeroImageSrc(galleryHeroFilename: string | null): string 
 
 /** Prefer hero/about/feature filenames; otherwise first gallery image. */
 export function pickFeaturedImages(allImages: string[]) {
+  const pool = excludeLeadershipPortraits(allImages);
   const lower = (n: string) => n.toLowerCase();
 
   const findMatch = (patterns: string[]) =>
-    allImages.find((img) => patterns.some((p) => lower(img).includes(p)));
+    pool.find((img) => patterns.some((p) => lower(img).includes(p)));
 
   const hero =
     findMatch(["hero", "banner", "cover"]) ??
-    allImages.find((img) => lower(img).startsWith("hero")) ??
-    allImages[0] ??
+    pool.find((img) => lower(img).startsWith("hero")) ??
+    pool[0] ??
     null;
 
   const about =
     findMatch(["about", "school", "building"]) ??
-    allImages.find((img) => img !== hero) ??
-    allImages[0] ??
+    pool.find((img) => img !== hero) ??
+    pool[0] ??
     null;
 
-  const activityPool = allImages.filter((img) => img !== hero && img !== about);
+  const activityPool = pool.filter((img) => img !== hero && img !== about);
 
   return {
     hero,
     about,
     activities: activityPool.slice(0, 6),
-    gallery: allImages,
+    gallery: pool,
   };
 }
